@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>头部进度条</title>
+	<style type="text/css">
+	.loading{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 100;
+		background-color: #fff;
+	}
+	.loading .pic{
+		width: 0%;
+		height: 5px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: #f00;
+	}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="loading">
+		<div class="pic">
+		</div>
+	</div>
+	<header>
+		<img src="http://f.hiphotos.baidu.com/image/pic/item/b03533fa828ba61efdc5ac024a34970a304e59f7.jpg" alt="">
+		<img src="http://g.hiphotos.baidu.com/image/pic/item/3ac79f3df8dcd100d403870c798b4710b9122f7b.jpg" alt="">
+	</header>
+	<script type="text/javascript">
+		$('.loading .pic').animate({width: "33%"}, 100);
+	</script>
+	<section>
+		<img src="http://e.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea31a51ecede39b6003af3b34c.jpg" alt="">
+		<img src="http://g.hiphotos.baidu.com/image/pic/item/55e736d12f2eb938c5c755dfde628535e5dd6f70.jpg" alt="">
+	</section>
+	<script type="text/javascript">
+		$('.loading .pic').animate({width: "66%"}, 100);
+	</script>
+	<footer>
+		<img src="http://c.hiphotos.baidu.com/image/pic/item/b21bb051f81986188c2a9da941ed2e738bd4e6aa.jpg" alt="">
+		<img src="http://pic.58pic.com/58pic/15/01/86/60V58PICF8v_1024.jpg" alt="">
+	</footer>
+	<script type="text/javascript">
+		$('.loading .pic').animate({width: "100%"}, 100, function (){
+			$('.loading').fadeOut();
+		});
+	</script>
+</body>
+</html>
