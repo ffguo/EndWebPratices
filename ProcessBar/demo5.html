@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3进度条</title>
+	<style type="text/css">
+	.loading{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 100;
+		background-color: #fff;
+	}
+	.loading .pic{
+		width: 100px;
+		height: 100px;
+		text-align: center;
+		line-height: 100px;
+		font-size: 30px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+	}
+	.loading .pic span{
+		display: block;
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		box-shadow: 0 3px 0 0 #666;
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		animation: rotating 1s infinite linear;
+	}
+
+	@keyframes rotating{
+		0%{ transform: rotate(0deg); }
+		100%{ transform: rotate(360deg); }
+	}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function (){
+			var $img = $('img');
+			var num = 0;
+
+			$img.each(function (i){
+				var oImg = new Image();
+				oImg.onload = function(){
+					oImg.onload = null;
+
+					num++;
+					$('.loading b').html(parseInt(num/$img.length*100) + "%");
+
+					if(num >= $img.length){
+						$('.loading').fadeOut();
+					}
+				}
+				oImg.src = $img[i].src;
+			});
+		})
+	</script>
+</head>
+<body>
+	<div class="loading">
+		<div class="pic">
+			<span></span>
+			<b>0%</b>
+		</div>
+	</div>
+
+	<img src="http://f.hiphotos.baidu.com/image/pic/item/b03533fa828ba61efdc5ac024a34970a304e59f7.jpg" alt="">
+	<img src="http://g.hiphotos.baidu.com/image/pic/item/3ac79f3df8dcd100d403870c798b4710b9122f7b.jpg" alt="">
+	<img src="http://e.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea31a51ecede39b6003af3b34c.jpg" alt="">
+	<img src="http://g.hiphotos.baidu.com/image/pic/item/55e736d12f2eb938c5c755dfde628535e5dd6f70.jpg" alt="">
+	<img src="http://c.hiphotos.baidu.com/image/pic/item/b21bb051f81986188c2a9da941ed2e738bd4e6aa.jpg" alt="">
+	<img src="http://pic.58pic.com/58pic/15/01/86/60V58PICF8v_1024.jpg" alt="">
+</body>
+</html>
