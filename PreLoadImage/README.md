@@ -1,9 +1,111 @@
-# å›¾ç‰‡é¢„åŠ è½½
-> å®ç°äº†å›¾ç‰‡é¢„åŠ è½½çš„**æ’ä»¶åŒ–**
+# Í¼Æ¬Ô¤¼ÓÔØ
+> ÊµÏÖÁËÍ¼Æ¬Ô¤¼ÓÔØµÄ**²å¼ş»¯**
 
-å¯¹jsåŸºç¡€æœ‰äº†æ–°çš„å­¦ä¹ ï¼Œä¸»è¦æœ‰ä»¥ä¸‹çŸ¥è¯†ç‚¹ï¼š
-1. (function($){...})(jQuery) å®ç°äº†é—­åŒ…ï¼Œä½¿é‡Œé¢çš„å˜é‡å‡½æ•°ä¸ä¼šå¯¹å…¶ä»–jsé€ æˆå½±å“ã€‚
-2. é€šè¿‡Mathçš„Maxå’ŒMinæ–¹æ³•ï¼Œæ¥è§„é¿åˆ¤æ–­å°äº0å’Œå¤§äºå›¾ç‰‡æ•°é‡ã€‚
-3. Imageå¯¹è±¡çš„onloadäº‹ä»¶è¦å†™åœ¨srcèµ‹å€¼å‰é¢ï¼Œæ¥è§„é¿å›¾ç‰‡ç¼“å­˜ï¼Œå¯¼è‡´æ— æ³•æ‰§è¡Œonloadäº‹ä»¶ã€‚
-3. å¯¹jsé¢å‘å¯¹è±¡æœ‰äº†ä¸€å®šçš„äº†è§£ã€‚
-4. jqueryæ’ä»¶åŒ–ï¼Œå°†å…·è±¡çš„æå–å‡ºæ¥ã€‚
+ä¯ÀÀÇ°Ô¤¼ÓÔØÍ¼Æ¬£¬Ê¹ÓÃjquery·â×°²å¼ş£¬Ò»¹²ÓĞÈı¸öÊµÀı½øĞĞÕ¹Ê¾¡£
+
+* ·­Ò³µÄÍ¼Æ¬ÎŞĞò¼ÓÔØ£¬Ô¤¼ÓÔØÓÃ°Ù·Ö±ÈÏÔÊ¾½ø¶È
+* qq±íÇéÎŞĞòÔ¤¼ÓÔØ£¬Ô¤¼ÓÔØÏÔÊ¾loadingĞÅÏ¢
+* ·­Ò³Âş»­ÓĞĞòÔ¤¼ÓÔØ
+
+## Í¼Æ¬Ô¤¼ÓÔØ²å¼şÖ÷Òª´úÂë
+### ¹¹Ôìº¯ÊıºÍ³õÊ¼»¯×Ö¶Î
+`
+//¹¹Ôìº¯Êı
+function PreLoad(imgs, options){
+	this.imgs = (typeof imgs === "string") ? [imgs] : imgs;
+	this.ops = $.extend({}, PreLoad.DEFAULTS, options);	//²ÎÊıoptions¸²¸ÇdefaultÖµ
+
+	this.ops.order == 'oredered' ? this._oredered() : this._unoredered();	//ÅĞ¶Ïµ÷ÓÃÓĞĞò»òÊÇÎŞĞò
+}
+//³õÊ¼»¯×Ö¶Î
+PreLoad.DEFAULTS = {
+	order: 'unoredered',	//Ä¬ÈÏÎŞĞò¼ÓÔØ
+	each: null,	//Ã¿ÕÅÍ¼Æ¬¼ÓÔØÍê±ÏºóÖ´ĞĞ
+	all: null	//ËùÓĞÍ¼Æ¬¼ÓÔØÍê±ÏºóÖ´ĞĞ
+};
+`
+### ÎŞĞò¼ÓÔØ
+`
+PreLoad.prototype._unoredered = function() {	//ÎŞĞò¼ÓÔØ
+	var imgs = this.imgs,
+		ops = this.ops,
+		count = 0,
+		len = imgs.length;
+
+	$.each(imgs, function(i, src){
+		if((typeof src) != "string") return;
+
+		var oImage = new Image();
+
+		$(oImage).on('load error', function(){
+			count++;
+
+			ops.each && ops.each(count);
+
+			if(count >= len){
+				ops.all && ops.all();
+			}
+		})
+
+		oImage.src = src;
+	})
+}
+`
+
+### ÓĞĞò¼ÓÔØ
+`
+PreLoad.prototype._oredered = function() {	//ÓĞĞò¼ÓÔØ
+	var imgs = this.imgs,
+		ops = this.ops,
+		count = 0,
+		len = imgs.length;
+
+	load();
+
+	function load() {
+		var oImage = new Image();
+
+		$(oImage).on("load error", function () {
+			ops.each && ops.each(count);
+			count++;
+
+			if(count >= len){
+				//Ö´ĞĞÍê±Ï
+				ops.all && ops.all();
+			}else{
+				load();
+			}
+		})
+
+		oImage.src = imgs[count];
+	}
+}
+`
+
+### À©Õ¹·½·¨
+`
+$.extend({
+	preload: function(imgs, options){
+		return new PreLoad(imgs, options);
+	}
+})
+`
+
+### À©Õ¹·½·¨µ÷ÓÃ
+`
+$.preload(ImageUrl Array or ImageUrl, {
+	order: '',
+	each: function(count){
+	},
+	all: function(){
+	}
+});
+`
+
+## ¸öÈËÑ§Ï°
+¶Ôjs»ù´¡ÓĞÁËĞÂµÄÑ§Ï°£¬Ö÷ÒªÓĞÒÔÏÂÖªÊ¶µã£º
+1. (function($){...})(jQuery) ÊµÏÖÁË±Õ°ü£¬Ê¹ÀïÃæµÄ±äÁ¿º¯Êı²»»á¶ÔÆäËûjsÔì³ÉÓ°Ïì¡£
+2. Í¨¹ıMathµÄMaxºÍMin·½·¨£¬À´¹æ±ÜÅĞ¶ÏĞ¡ÓÚ0ºÍ´óÓÚÍ¼Æ¬ÊıÁ¿¡£
+3. Image¶ÔÏóµÄonloadÊÂ¼şÒªĞ´ÔÚsrc¸³ÖµÇ°Ãæ£¬À´¹æ±ÜÍ¼Æ¬»º´æ£¬µ¼ÖÂÎŞ·¨Ö´ĞĞonloadÊÂ¼ş¡£
+3. ¶ÔjsÃæÏò¶ÔÏóÓĞÁËÒ»¶¨µÄÁË½â¡£
+4. jquery²å¼ş»¯£¬½«¾ßÏóµÄÌáÈ¡³öÀ´¡£

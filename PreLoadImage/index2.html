@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片预加载之无序加载---QQ表情</title>
+	<style type="text/css">
+		body, p, ul, li{
+			padding: 0;
+			margin: 0;
+		}
+		a {
+			text-decoration: none;
+		}
+		li {
+			list-style: none;
+		}
+		body {
+			background-color: #eee;
+		}
+		.box {
+			margin: 150px 0 0 200px;
+		}
+		#face-btn {
+			display: block;
+			background: url(images/icon.png) no-repeat 0 -4px;
+			color: #333;
+			text-indent: 40px;
+			cursor: pointer;
+		}
+		#face-btn:hover {
+			background-position: 0 -36px;
+		}
+		.panel {
+			display: none;
+			width: 365px;
+			padding: 2px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+		}
+		.loading {
+			text-align: center;
+		}
+		.list li {
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			border: 1px solid #fff;
+			margin-bottom: 5px;
+			cursor: pointer;
+		}
+		.list li:hover {
+			border: 1px solid #ccc;
+		}
+		.list li img {
+			width: 24px;
+			height: 24px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<a href="javascript:;" id="face-btn">表情</a>
+		<div class="panel">
+			<p class="loading">表情加载中, 请稍后...</p>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/preload.js"></script>
+	<script type="text/javascript">
+		var $panel = $('.panel'),
+			$btn = $('#face-btn');
+
+		//添加图片地址
+		var imgs = [];
+		for (var i = 0; i < 132; i++) {
+			imgs[i] = "images/face/" + (i + 1) + ".gif";
+		}
+
+		$btn.on("click", function (e){
+			e.stopPropagation();	//阻止冒泡
+			$panel.show();
+
+			//图片加载完毕后执行显示表情
+			$.preload(imgs, {
+				all: function (){
+					var html = "";
+
+					html += '<ul class="list">';
+					for (var i = 0; i < imgs.length; i++) {
+						html += '<li><img src="' + imgs[i] + '" alt=""></li>';
+					}
+					html += "</ul>";
+
+					setTimeout(function (){
+						$panel.html(html);
+					}, 1000);
+				}
+			});
+		});
+
+		$(document).on("click", function (){
+			$panel.hide();
+		});
+	</script>
+</body>
+</html>
