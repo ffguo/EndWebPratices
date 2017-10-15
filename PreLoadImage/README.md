@@ -1,32 +1,32 @@
-# м╪ф╛т╓╪сть
-> й╣ожакм╪ф╛т╓╪сть╣д**╡Е╪Ч╩╞**
+# Е⌡╬Г┴┤И╒└Е┼═Х╫╫
+> Е╝·Г▌╟Д╨├Е⌡╬Г┴┤И╒└Е┼═Х╫╫Г └**Ф▐▓Д╩╤Е▄√**
 
-Д╞ююг╟т╓╪стьм╪ф╛ё╛й╧сцjquery╥Бв╟╡Е╪Чё╛р╩╧╡спхЩ╦Жй╣юЩ╫Ьппу╧й╬║ё
+Ф╣▐Х╖┬Е┴█И╒└Е┼═Х╫╫Е⌡╬Г┴┤О╪▄Д╫©Г■╗jqueryЕ╟│Хё┘Ф▐▓Д╩╤О╪▄Д╦─Е┘╠Ф°┴Д╦┴Д╦╙Е╝·Д╬▀Х©⌡Х║▄Е╠∙Г╓╨Ц─┌
 
-* ╥╜рЁ╣дм╪ф╛нчпР╪стьё╛т╓╪стьсц╟ы╥ж╠хотй╬╫Ь╤х
-* qq╠МгИнчпРт╓╪стьё╛т╓╪стьотй╬loadingпео╒
-* ╥╜рЁбЧ╩╜сппРт╓╪сть
+* Г©╩И║╣Г └Е⌡╬Г┴┤Ф≈═Е╨▐Е┼═Х╫╫О╪▄И╒└Е┼═Х╫╫Г■╗Г≥╬Е┬├Ф╞■Ф≤╬Г╓╨Х©⌡Е╨╕
+* qqХ║╗Ф┐┘Ф≈═Е╨▐И╒└Е┼═Х╫╫О╪▄И╒└Е┼═Х╫╫Ф≤╬Г╓╨loadingД©║Ф│╞
+* Г©╩И║╣Ф╪╚Г■╩Ф°┴Е╨▐И╒└Е┼═Х╫╫
 
-## м╪ф╛т╓╪сть╡Е╪ЧжВр╙╢ЗбК
-### ╧╧тЛ╨╞йЩ╨мЁУй╪╩╞вж╤н
-`
-//╧╧тЛ╨╞йЩ
+## Е⌡╬Г┴┤И╒└Е┼═Х╫╫Ф▐▓Д╩╤Д╦╩Х╕│Д╩ёГ═│
+### Ф·└И─═Е┤╫Ф∙╟Е▓▄Е┬²Е╖▀Е▄√Е╜≈Ф╝╣
+```
+//Ф·└И─═Е┤╫Ф∙╟
 function PreLoad(imgs, options){
 	this.imgs = (typeof imgs === "string") ? [imgs] : imgs;
-	this.ops = $.extend({}, PreLoad.DEFAULTS, options);	//╡нйЩoptions╦╡╦гdefaultж╣
+	this.ops = $.extend({}, PreLoad.DEFAULTS, options);	//Е▐┌Ф∙╟optionsХ╕├Г⌡√defaultЕ─╪
 
-	this.ops.order == 'oredered' ? this._oredered() : this._unoredered();	//еп╤о╣ВсцсппР╩РйгнчпР
+	this.ops.order == 'oredered' ? this._oredered() : this._unoredered();	//Е┬╓Ф√╜Х╟┐Г■╗Ф°┴Е╨▐Ф┬√Ф≤╞Ф≈═Е╨▐
 }
-//ЁУй╪╩╞вж╤н
+//Е┬²Е╖▀Е▄√Е╜≈Ф╝╣
 PreLoad.DEFAULTS = {
-	order: 'unoredered',	//д╛хончпР╪сть
-	each: null,	//ц©уем╪ф╛╪стьмЙ╠о╨Сж╢пп
-	all: null	//кЫспм╪ф╛╪стьмЙ╠о╨Сж╢пп
+	order: 'unoredered',	//И╩≤Х╝╓Ф≈═Е╨▐Е┼═Х╫╫
+	each: null,	//Ф╞▐Е╪═Е⌡╬Г┴┤Е┼═Х╫╫Е╝▄Ф╞∙Е░▌Ф┴╖Х║▄
+	all: null	//Ф┴─Ф°┴Е⌡╬Г┴┤Е┼═Х╫╫Е╝▄Ф╞∙Е░▌Ф┴╖Х║▄
 };
-`
-### нчпР╪сть
-`
-PreLoad.prototype._unoredered = function() {	//нчпР╪сть
+```
+### Ф≈═Е╨▐Е┼═Х╫╫
+```
+PreLoad.prototype._unoredered = function() {	//Ф≈═Е╨▐Е┼═Х╫╫
 	var imgs = this.imgs,
 		ops = this.ops,
 		count = 0,
@@ -50,11 +50,11 @@ PreLoad.prototype._unoredered = function() {	//нчпР╪сть
 		oImage.src = src;
 	})
 }
-`
+```
 
-### сппР╪сть
-`
-PreLoad.prototype._oredered = function() {	//сппР╪сть
+### Ф°┴Е╨▐Е┼═Х╫╫
+```
+PreLoad.prototype._oredered = function() {	//Ф°┴Е╨▐Е┼═Х╫╫
 	var imgs = this.imgs,
 		ops = this.ops,
 		count = 0,
@@ -70,7 +70,7 @@ PreLoad.prototype._oredered = function() {	//сппР╪сть
 			count++;
 
 			if(count >= len){
-				//ж╢ппмЙ╠о
+				//Ф┴╖Х║▄Е╝▄Ф╞∙
 				ops.all && ops.all();
 			}else{
 				load();
@@ -80,10 +80,10 @@ PreLoad.prototype._oredered = function() {	//сппР╪сть
 		oImage.src = imgs[count];
 	}
 }
-`
+```
 
-### ю╘у╧╥╫╥╗
-`
+### Ф┴╘Е╠∙Ф√╧ФЁ∙
+```
 $.extend({
 	preload: function(imgs, options){
 		return new PreLoad(imgs, options);
@@ -91,7 +91,7 @@ $.extend({
 })
 `
 
-### ю╘у╧╥╫╥╗╣Всц
+### Ф┴╘Е╠∙Ф√╧ФЁ∙Х╟┐Г■╗
 `
 $.preload(ImageUrl Array or ImageUrl, {
 	order: '',
@@ -100,12 +100,12 @@ $.preload(ImageUrl Array or ImageUrl, {
 	all: function(){
 	}
 });
-`
+```
 
-## ╦Жхкя╖о╟
-╤тjs╩Ы╢║спакпб╣дя╖о╟ё╛жВр╙спртобж╙й╤╣Цё╨
-1. (function($){...})(jQuery) й╣ожак╠у╟Эё╛й╧юОцФ╣д╠Да©╨╞йЩ╡╩╩А╤тфДкШjsтЛЁис╟оЛ║ё
-2. м╗╧ЩMath╣дMax╨мMin╥╫╥╗ё╛ю╢╧Ф╠эеп╤оп║сз0╨м╢Ссзм╪ф╛йЩа©║ё
-3. Image╤тоС╣дonloadйб╪Чр╙п╢тзsrc╦Ёж╣г╟цФё╛ю╢╧Ф╠эм╪ф╛╩╨╢Фё╛╣╪жбнч╥╗ж╢ппonloadйб╪Ч║ё
-3. ╤тjsцФоР╤тоСспакр╩╤╗╣дак╫Б║ё
-4. jquery╡Е╪Ч╩╞ё╛╫╚╬ъоС╣длАх║ЁЖю╢║ё
+## Д╦╙Д╨╨Е╜╕Д╧═
+Е╞╧jsЕ÷╨Г║─Ф°┴Д╨├Ф√╟Г └Е╜╕Д╧═О╪▄Д╦╩Х╕│Ф°┴Д╩╔Д╦▀Г÷╔Х╞├Г┌╧О╪ 
+1. (function($){...})(jQuery) Е╝·Г▌╟Д╨├И≈╜Е▄┘О╪▄Д╫©И┤▄И²╒Г └Е▐≤И┤▐Е┤╫Ф∙╟Д╦█Д╪ Е╞╧Е┘╤Д╩√jsИ─═Ф┬░Е╫╠Е⌠█Ц─┌
+2. И─ Х©┤MathГ └MaxЕ▓▄MinФ√╧ФЁ∙О╪▄Ф²╔Х╖└И│©Е┬╓Ф√╜Е╟▐Д╨▌0Е▓▄Е╓╖Д╨▌Е⌡╬Г┴┤Ф∙╟И┤▐Ц─┌
+3. ImageЕ╞╧Х╠║Г └onloadД╨▀Д╩╤Х╕│Е├≥Е°╗srcХ╣▀Е─╪Е┴█И²╒О╪▄Ф²╔Х╖└И│©Е⌡╬Г┴┤Г╪⌠Е╜≤О╪▄Е╞╪Х┤╢Ф≈═ФЁ∙Ф┴╖Х║▄onloadД╨▀Д╩╤Ц─┌
+3. Е╞╧jsИ²╒Е░▒Е╞╧Х╠║Ф°┴Д╨├Д╦─Е╝ Г └Д╨├Х╖ёЦ─┌
+4. jqueryФ▐▓Д╩╤Е▄√О╪▄Е╟├Е┘╥Х╠║Г └Ф▐░Е▐√Е┤╨Ф²╔Ц─┌
