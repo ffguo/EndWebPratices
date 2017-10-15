@@ -9,7 +9,7 @@
 
 ## 图片预加载插件主要代码
 ### 构造函数和初始化字段
-```
+```JavaScript
 //构造函数
 function PreLoad(imgs, options){
 	this.imgs = (typeof imgs === "string") ? [imgs] : imgs;
@@ -25,7 +25,7 @@ PreLoad.DEFAULTS = {
 };
 ```
 ### 无序加载
-```
+```JavaScript
 PreLoad.prototype._unoredered = function() {	//无序加载
 	var imgs = this.imgs,
 		ops = this.ops,
@@ -53,7 +53,7 @@ PreLoad.prototype._unoredered = function() {	//无序加载
 ```
 
 ### 有序加载
-```
+```JavaScript
 PreLoad.prototype._oredered = function() {	//有序加载
 	var imgs = this.imgs,
 		ops = this.ops,
@@ -83,7 +83,7 @@ PreLoad.prototype._oredered = function() {	//有序加载
 ```
 
 ### 扩展方法
-```
+```JavaScript
 $.extend({
 	preload: function(imgs, options){
 		return new PreLoad(imgs, options);
@@ -92,7 +92,7 @@ $.extend({
 `
 
 ### 扩展方法调用
-`
+```JavaScript
 $.preload(ImageUrl Array or ImageUrl, {
 	order: '',
 	each: function(count){
