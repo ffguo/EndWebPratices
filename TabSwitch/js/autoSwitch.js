@@ -15,10 +15,11 @@ function Tab() {
 	for (var i = 0; i < titles.length; i++) {
 		titles[i].id = i;
 
-		titles[i].onmouseover = function (){
+		titles[i].addEventListener("mouseover",function(e){
+		        e.stopPropagation()
 			clearInterval(timer);
 			ChangeOption(this.id);
-		};
+		},true)
 
 		titles[i].onmouseout = function (){
 			timer = setInterval(AutoPlay, 2000);
