@@ -3,6 +3,8 @@ function $(id) {
 }
 
 window.onload = function (){
+	var timer = null;
+
 	var titles = $('notice-tit').getElementsByTagName('li'),
 		contents = $('notice-con').getElementsByClassName('mod');
 
@@ -12,13 +14,22 @@ window.onload = function (){
 		titles[i].id = i;
 
 		titles[i].onmouseover = function (){
-			for (var i = 0; i < titles.length; i++) {
-				titles[i].className = "";
-				contents[i].style.display = "none";
+			var that = this;
+
+			if(timer){
+				clearTimeout(timer);
+				timer = null;
 			}
 
-			this.className = "select";
-			contents[this.id].style.display = "block";
+			timer = setTimeout(function (){
+				for (var j = 0; j < titles.length; j++) {
+					titles[j].className = "";
+					contents[j].style.display = "none";
+				}
+
+				that.className = "select";
+				contents[that.id].style.display = "block";
+			}, 500);
 		}
 	}
 };
