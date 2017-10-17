@@ -89,7 +89,7 @@ $.extend({
 		return new PreLoad(imgs, options);
 	}
 })
-`
+```
 
 ### 扩展方法调用
 ```JavaScript
