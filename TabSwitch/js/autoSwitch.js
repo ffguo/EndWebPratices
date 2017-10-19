@@ -16,7 +16,7 @@ function Tab() {
 		titles[i].id = i;
 
 		titles[i].addEventListener("mouseover",function(e){
-		        e.stopPropagation()
+		    e.stopPropagation();
 			clearInterval(timer);
 			ChangeOption(this.id);
 		},true)
