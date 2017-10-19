@@ -88,17 +88,18 @@
 			var self = this,	//on绑定事件里面的this指代的是this.$el
 				itemLength = self.$items.length;
 
-			this.$el.on(this.select, ".rating-item", function (e){
+			this.$el.on(this.selectEvent, ".rating-item", function (e){
 				var num = 0,
 					$this = $(this);
-
+				//执行点亮操作
 				self.select(e, $this);
 				num = $this.index() + self.add;
 				self.lightOn(num);
+				//执行select方法
 				(typeof self.ops.select) === "function" && self.ops.select.call(this, num, itemLength);	//call改变this的指向到当前.rating-item元素
 				self.$el.trigger("select", [num, itemLength]);	//触发select事件
 			}).on("click", ".rating-item", function (){
-				self.ops.num = $(this).index() + 1;
+				self.ops.num = $(this).index() + self.add;
 				(typeof self.ops.chosen) === "function" && self.ops.chosen.call(this, self.ops.num, itemLength);
 				self.$el.trigger("chosen", [self.ops.num, itemLength]);
 			}).on("mouseout", function (){
@@ -121,7 +122,7 @@
 			Light.call(this, el, options);
 			this.selectEvent = "mouseover";
 		};
-		extend(lightEntire, Light);
+		extend(LightEntire, Light);
 
 		//点亮星星
 		LightEntire.prototype.lightOn = function(num) {
