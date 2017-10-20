@@ -111,6 +111,9 @@
 		Light.prototype.select = function(){
 			throw new Error("子类必须覆写该方法");
 		};
+		Light.prototype.unbindEvent = function(){
+			this.$el.off();
+		}
 
 
 
@@ -146,7 +149,7 @@
 		//点亮星星
 		LightHalf.prototype.lightOn = function(num) {
 			var entireCount = parseInt(num),
-				isHalf = entireCount !== num;
+				isHalf = (entireCount !== num);
 
 			Light.prototype.lightOn.call(this, entireCount);
 
@@ -181,15 +184,33 @@
 		};
 
 		//初始化
-		var init = function(el, options){
-			options = $.extend({}, this.defaults, options);	//传递的options参数覆写defaults字段
+		var init = function(el, option){
+			var $el = $(el),
+				rating = $el.data("rating");
+				options = $.extend({}, defaults, typeof option === "object" && option);	//传递的options参数覆写defaults字段
 			//new lightEntire(el, options).init();
 			//防止用户传递不存在的mode
 			if(!mode[options.mode]){
 				options.mode = "LightEntire";
 			}
-			new mode[options.mode](el, options).init();
+			//单例模式
+			if(!rating){
+				$el.data("rating", (rating = new mode[options.mode](el, options)));
+				rating.init();
+			}
+			//传入字符串方法
+			if(typeof option === "string")
+				rating[option]();
 		};
+
+		//jQuery插件
+		$.fn.extend({
+			rating:function(option){
+				return this.each(function (){
+					init(this, option);
+				})
+			}
+		})
 
 		//返回值
 		return {
@@ -198,22 +219,37 @@
 	})();
 
 	//使用
-	rating.init("#rating",{
+	// rating.init("#rating",{
+	// 	mode: "LightHalf",
+	// 	num: 2.5,
+	// 	// select: function(index, num){
+	// 	// 	//console.log(this);
+	// 	// 	console.log("移上：" + index + "/" + num);
+	// 	// },
+	// 	chosen: function(index, num){
+	// 		rating.init("#rating", "unbindEvent");
+	// 		//console.log("点击：" + index + "/" + num);
+	// 	}
+	// });
+	//select和chosen监听事实，由trigger调用
+	// $("#rating").on("select", function (e, num, itemLength){
+	// 	console.log("移上：" + num + "/" + itemLength);
+	// }).on("chosen", function (e, num, itemLength){
+	// 	console.log("点击：" + num + "/" + itemLength);
+	// });
+	$("#rating").rating({
 		mode: "LightHalf",
 		num: 2.5,
-		// select: function(index, num){
-		// 	//console.log(this);
-		// 	console.log("移上：" + index + "/" + num);
-		// },
-		// chosen: function(index, num){
-		// 	console.log("点击：" + index + "/" + num);
-		// }
+		select: function(index, num){
+			console.log("移上：" + index + "/" + num);
+		},
+		chosen: function(){
+			rating.init("#rating", "unbindEvent");
+		}
 	});
-	//select和chosen监听事实，由trigger调用
-	$("#rating").on("select", function (num, itemLength){
-		console.log("移上：" + num + "/" + itemLength);
-	}).on("chosen", function (num, itemLength){
-		console.log("点击：" + num + "/" + itemLength);
+	$("#rating2").rating({
+		mode: "LightEntire",
+		num: 3
 	});
 </script>
 </html>
