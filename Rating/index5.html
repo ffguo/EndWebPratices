@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>星级评分--遮罩方式</title>
+<style type="text/css">
+	body, ul, li {
+		margin: 0;
+		padding: 0;
+	}
+	li {
+		list-style-type: none;
+	}
+	.rating, .rating-display {
+		background: url(images/star.png) repeat-x;
+	}
+	.rating {
+		width: 165px;
+		height: 37px;
+		margin: 100px auto;
+		position: relative;
+	}
+	.rating-display {
+		width: 0;
+		height: 37px;
+		background-position: -1px -40px;	/*图片的问题要偏移一个像素*/
+	}
+	.rating-mask {
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	.rating-mask .rating-item {
+		float: left;
+		width: 33px;
+		height: 37px;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+
+<div id="rating" class="rating">
+	<div class="rating-display"></div>
+	<ul class="rating-mask">
+		<li class="rating-item"></li>
+		<li class="rating-item"></li>
+		<li class="rating-item"></li>
+		<li class="rating-item"></li>
+		<li class="rating-item"></li>
+	</ul>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+	var rating = (function (){
+		//策略类
+		var strategies = {
+			entire: function (){	//整颗模式
+				return 1;
+			},
+			half: function (){	//半颗模式
+				return 2;
+			},
+			quarter: function (){	//四分之一颗模式
+				return 4;
+			}
+		};
+
+		//星星类
+		var Rating = function (el, options){	//构造函数
+			this.$el = $(el);
+			//this.$display = this.$el.find('.rating-display');	//这里申明其他地方无法调用？？？
+			this.ops = $.extend({}, Rating.DEFAULT, options);
+
+			if(!strategies[this.ops.mode]){	//如果用户输入的策略不存在
+				this.ops.mode = "entire";
+			}
+			this.ratio = strategies[this.ops.mode]();
+			this.ops.num *= this.ratio;
+			this.ops.total *= this.ratio;
+
+			//设置元素和显示层宽度
+			this.itemWidth = 33 / this.ratio;
+			this.displayWidth = this.ops.num * this.itemWidth;
+		}
+		Rating.DEFAULT = {		//星星默认参数
+			mode: "entire",		//模式
+			total: 5,			//星星总颗数
+			num: 2,				//点亮星星颗数
+			readOnly: false,	//是否可以点亮
+			select: null,		//鼠标移上回调事件
+			chosen: null		//鼠标点击后回调事件
+		};
+		Rating.prototype.init = function (){	//初始化函数
+			this.buildHTML();
+			this.setCSS();
+			if(!this.ops.readOnly)
+				this.bindEvent();
+		};
+		Rating.prototype.buildHTML = function (){	//创建星星html结构
+			var html = '<div class="rating-display"></div><ul class="rating-mask">';
+			for (var i = 0; i < this.ops.total; i++) {
+				html += '<li class="rating-item"></li>';
+			}
+			html += '</ul>';
+
+			this.$el.html(html);
+		};
+		Rating.prototype.setCSS = function (){	//设置CSS样式
+			this.$el.width(this.ops.total * this.itemWidth);
+			this.$display = this.$el.find('.rating-display');	//这里申明其他地方可以调用？？？
+			this.$display.width(this.displayWidth);
+			this.$el.find('.rating-item').width(this.itemWidth);
+		};
+		Rating.prototype.bindEvent = function (){	//绑定事件
+			var self = this;
+
+			self.$el.on("mouseover", ".rating-item", function (){	//鼠标移上事件
+				var index = $(this).index() + 1;
+
+				self.$display.width(self.itemWidth * index);
+
+				(typeof self.ops.select === 'function') && self.ops.select.call(this, index, self.ops.total);
+				self.$el.trigger('select', [index, self.ops.total]);
+			}).on("click", ".rating-item", function (){	//鼠标点击事件
+				var index = $(this).index() + 1;
+
+				self.displayWidth = index * self.itemWidth;
+
+				(typeof self.ops.chosen === 'function') && self.ops.chosen.call(this, index, self.ops.total);
+				self.$el.trigger('chosen', [index, self.ops.total]);
+			}).on("mouseout", function (){	//鼠标移出事件
+				self.$display.width(self.displayWidth);
+			});
+		};
+
+		//入口函数
+		var init = function (el, option){
+			new Rating(el, option).init();
+		};
+
+		//返回值
+		return {
+			init: init
+		};
+	})();
+
+	rating.init("#rating", {
+		mode: "half",
+		total: 7,
+		num: 3,
+		readOnly: false,
+		select: function (num, count){
+			console.log(num + '/' + count);
+		},
+		chosen: function (num, count){
+			alert(num + '/' + count);
+		}
+	});
+</script>
+</body>
+</html>
